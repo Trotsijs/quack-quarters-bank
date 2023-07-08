@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\SecurityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +25,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/accounts', [BankAccountController::class, 'index'])
     ->middleware(['auth'])->name('accounts');
+
+Route::get('/security', [SecurityController::class, 'index'])->name('security');
 
 require __DIR__.'/auth.php';
