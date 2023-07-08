@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Account;
+use App\Models\BankAccount;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
             'otp_secret' => (new Google2FA)->generateSecretKey(),
         ]);
 
-        Account::create([
+        BankAccount::create([
             'owner_id' => $user->id,
             'account_number' => $this->generateAccountNumber(),
             'balance' => 0,

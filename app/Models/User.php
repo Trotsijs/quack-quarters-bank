@@ -32,6 +32,6 @@ class User extends Authenticatable
 
     public function accounts(): HasMany
     {
-        return $this->hasMany(Account::class, 'owner_id');
+        return $this->hasMany(BankAccount::class, 'owner_id');
     }
 }
