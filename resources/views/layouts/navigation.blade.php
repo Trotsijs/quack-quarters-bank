@@ -44,13 +44,29 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <x-dropdown-link :href="route('security')">
-                                {{ __('Security') }}
+                                <div class="flex items-center gap-x-2">
+                                    <div>
+                                        <x-security-icon />
+                                    </div>
+                                    <div>
+                                        {{ __('Security') }}
+                                    </div>
+                                </div>
+
                             </x-dropdown-link>
 
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                <div class="flex items-center gap-x-2">
+                                    <div>
+                                        <x-logout-icon />
+                                    </div>
+                                    <div>
+                                        {{ __('Log Out') }}
+                                    </div>
+                                </div>
+
                             </x-dropdown-link>
                         </form>
                     </x-slot>
