@@ -27,6 +27,9 @@
                     <x-nav-link :href="route('withdraw')" :active="request()->routeIs('withdraw')">
                         {{ __('Withdraw') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('transfer')" :active="request()->routeIs('transfer')">
+                        {{ __('Transfer') }}
+                    </x-nav-link>
                 </div>
             </div>
 

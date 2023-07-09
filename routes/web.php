@@ -3,6 +3,7 @@
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\SecurityController;
+use App\Http\Controllers\TransferController;
 use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,11 @@ Route::get('/withdraw', [WithdrawController::class, 'index'])
     ->middleware(['auth'])->name('withdraw');
 Route::post('/withdraw', [WithdrawController::class, 'withdraw'])
     ->middleware(['auth'])->name('withdraw');
+
+Route::get('/transfer', [TransferController::class, 'index'])
+    ->middleware(['auth'])->name('transfer');
+Route::post('/transfer', [TransferController::class, 'transfer'])
+    ->middleware(['auth'])->name('transfer');
 
 Route::get('/security', [SecurityController::class, 'index'])->name('security');
 
