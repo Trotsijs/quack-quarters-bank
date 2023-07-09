@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BankAccount;
+use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +50,15 @@ class TransferController extends Controller
             ->first();
 
         $toAccount = BankAccount::where('account_number', $toAccountNumber)->first();
+
+        $transaction = Transaction::create([
+            'from_account_id' => $fromAccountId,
+            'to_account_id' => $toAccountNumber,
+            'type' => 'Transfer',
+            'amount' => $amount,
+            'description' => 'Transfer',
+
+        ]);
 
         if ($fromAccount && $toAccount) {
             if ($fromAccount->balance >= $amount) {

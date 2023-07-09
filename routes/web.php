@@ -50,6 +50,10 @@ Route::get('/transfer', [TransferController::class, 'index'])
 Route::post('/transfer', [TransferController::class, 'transfer'])
     ->middleware(['auth'])->name('transfer');
 
+Route::delete('/delete/{accountNumber}', [BankAccountController::class, 'delete'])
+    ->middleware(['auth'])->name('delete');
+
+
 Route::get('/security', [SecurityController::class, 'index'])->name('security');
 
 require __DIR__.'/auth.php';

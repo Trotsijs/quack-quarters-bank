@@ -37,7 +37,7 @@ class BankAccountController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'currency' => 'required',
-            '2fa_code' => 'required|numeric|min:6'
+            '2fa_code' => 'required|numeric|min:6',
         ]);
 
         if ($validator->fails()) {
@@ -69,11 +69,36 @@ class BankAccountController extends Controller
         return redirect()->route('accounts')->with('success', 'Account created successfully!');
     }
 
+    public function delete($accountNumber): RedirectResponse
+    {
+        $user = Auth::user();
+
+        $validator = Validator::make(['account_number' => $accountNumber], [
+            'account_number' => 'required|exists:bank_accounts,account_number,owner_id,' . $user->id
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors(['error' => 'Invalid account number']);
+        }
+
+        $account = BankAccount::where('account_number', $accountNumber)->first();
+
+        if ($account->balance > 0) {
+            return redirect()->back()->withErrors(['error' => 'Cannot delete account with a balance greater than 0']);
+        }
+
+        $account->delete();
+
+        return redirect()->route('accounts')->with('success', 'Account deleted successfully!');
+    }
+
+
+
     private function createAccountNumber(): string
     {
         $accountNumber = 'LV07QUACK0000' . rand(100000000, 999999999);
         $validator = Validator::make(['account_number' => $accountNumber], [
-            'account_number' => 'unique:bank_accounts,account_number'
+            'account_number' => 'unique:bank_accounts,account_number',
         ]);
 
         if ($validator->fails()) {

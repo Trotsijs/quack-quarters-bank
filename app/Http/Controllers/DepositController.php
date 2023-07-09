@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BankAccount;
+use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,12 +44,24 @@ class DepositController extends Controller
 
         $account = BankAccount::where('owner_id', $user->id)->where('id', $accountId)->first();
 
+        $transaction = Transaction::create([
+            'from_account_id' => '',
+            'to_account_id' => $accountId,
+            'type' => 'Deposit',
+            'amount' => $amount,
+            'description' => 'Deposit',
+
+        ]);
+
         if ($account) {
             $account->balance += $amount;
             $account->save();
 
             return redirect()->back()->with('success', 'Deposit successful');
         }
+
+
+
 
         return redirect()->back()->with('error', 'Account not found');
     }

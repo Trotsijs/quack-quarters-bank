@@ -730,6 +730,9 @@ select {
 .block {
   display: block;
 }
+.inline {
+  display: inline;
+}
 .flex {
   display: flex;
 }
@@ -838,6 +841,9 @@ select {
 }
 .cursor-default {
   cursor: default;
+}
+.cursor-not-allowed {
+  cursor: not-allowed;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -963,6 +969,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
 .bg-gray-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
@@ -1060,6 +1070,9 @@ select {
 }
 .pr-4 {
   padding-right: 1rem;
+}
+.pr-5 {
+  padding-right: 1.25rem;
 }
 .pt-1 {
   padding-top: 0.25rem;
