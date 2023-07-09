@@ -3,6 +3,7 @@
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\SecurityController;
+use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +38,11 @@ Route::get('/deposit', [DepositController::class, 'index'])
     ->middleware(['auth'])->name('deposit');
 Route::post('/deposit', [DepositController::class, 'deposit'])
     ->middleware(['auth'])->name('deposit');
+
+Route::get('/withdraw', [WithdrawController::class, 'index'])
+    ->middleware(['auth'])->name('withdraw');
+Route::post('/withdraw', [WithdrawController::class, 'withdraw'])
+    ->middleware(['auth'])->name('withdraw');
 
 Route::get('/security', [SecurityController::class, 'index'])->name('security');
 
