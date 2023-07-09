@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600 mr-2" />
+                        <x-application-logo class="block h-10 w-auto fill-[#FF0029] text-gray-600 mr-2" />
                     </a>
                     <div class="text-[#FF0029] font-bold text-lg">
                         Quack Quarters Bank
@@ -43,6 +43,18 @@
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
+                            <x-dropdown-link :href="route('create')">
+                                <div class="flex items-center gap-x-2">
+                                    <div>
+                                        <x-create-icon />
+                                    </div>
+                                    <div>
+                                        {{ __('New Account') }}
+                                    </div>
+                                </div>
+
+                            </x-dropdown-link>
+
                             <x-dropdown-link :href="route('security')">
                                 <div class="flex items-center gap-x-2">
                                     <div>
@@ -59,10 +71,10 @@
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 <div class="flex items-center gap-x-2">
-                                    <div>
+                                    <div class="fill-red-500">
                                         <x-logout-icon />
                                     </div>
-                                    <div>
+                                    <div class="text-red-500">
                                         {{ __('Log Out') }}
                                     </div>
                                 </div>

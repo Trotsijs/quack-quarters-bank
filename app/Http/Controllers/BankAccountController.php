@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankAccount;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,4 +27,59 @@ class BankAccountController extends Controller
         return view('accounts', compact('accounts'));
     }
 
+
+    public function showCreateForm(): View
+    {
+        return view('createAccount');
+    }
+
+    public function create(Request $request): RedirectResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'currency' => 'required',
+            'otp_secret' => 'required|numeric|min:6'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = Auth::user();
+        $accountNumber = $this->createAccountNumber();
+
+        $google2fa = new Google2FA();
+        $secret = $user->otp_secret;
+        $otpSecret = $request->input('otp_secret');
+
+        $valid = $google2fa->verifyKey($secret, $otpSecret);
+
+        if (!$valid) {
+            return redirect()->back()->withErrors(['error' => 'Invalid 2FA Code'])->withInput();
+        }
+
+        BankAccount::create([
+            'owner_id' => $user->id,
+            'account_number' => $accountNumber,
+            'balance' => 0,
+            'currency' => $request->input('currency'),
+        ]);
+
+        return redirect()->route('accounts')->with('success', 'Account created successfully!');
+    }
+
+    private function createAccountNumber(): string
+    {
+        $accountNumber = 'LV07QUACK0000' . rand(100000000, 999999999);
+        $validator = Validator::make(['account_number' => $accountNumber], [
+            'account_number' => 'unique:bank_accounts,account_number'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->createAccountNumber();
+        }
+
+        return $accountNumber;
+    }
 }

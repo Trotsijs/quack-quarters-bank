@@ -26,6 +26,11 @@ Route::get('/dashboard', function () {
 Route::get('/accounts', [BankAccountController::class, 'index'])
     ->middleware(['auth'])->name('accounts');
 
+Route::get('/create', [BankAccountController::class, 'showCreateForm'])
+    ->middleware(['auth'])->name('createAccount');
+Route::post('/create', [BankAccountController::class, 'create'])
+    ->middleware(['auth'])->name('create');
+
 Route::get('/security', [SecurityController::class, 'index'])->name('security');
 
 require __DIR__.'/auth.php';
