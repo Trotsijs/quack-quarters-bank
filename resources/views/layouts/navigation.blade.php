@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('accounts')" :active="request()->routeIs('accounts')">
                         {{ __('Accounts') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('deposit')" :active="request()->routeIs('deposit')">
+                        {{ __('Deposit') }}
+                    </x-nav-link>
                 </div>
             </div>
 

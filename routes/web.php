@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\DepositController;
 use App\Http\Controllers\SecurityController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,8 +29,14 @@ Route::get('/accounts', [BankAccountController::class, 'index'])
 
 Route::get('/create', [BankAccountController::class, 'showCreateForm'])
     ->middleware(['auth'])->name('createAccount');
+
 Route::post('/create', [BankAccountController::class, 'create'])
     ->middleware(['auth'])->name('create');
+
+Route::get('/deposit', [DepositController::class, 'index'])
+    ->middleware(['auth'])->name('deposit');
+Route::post('/deposit', [DepositController::class, 'deposit'])
+    ->middleware(['auth'])->name('deposit');
 
 Route::get('/security', [SecurityController::class, 'index'])->name('security');
 

@@ -37,7 +37,7 @@ class BankAccountController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'currency' => 'required',
-            'otp_secret' => 'required|numeric|min:6'
+            '2fa_code' => 'required|numeric|min:6'
         ]);
 
         if ($validator->fails()) {
@@ -51,7 +51,7 @@ class BankAccountController extends Controller
 
         $google2fa = new Google2FA();
         $secret = $user->otp_secret;
-        $otpSecret = $request->input('otp_secret');
+        $otpSecret = $request->input('2fa_code');
 
         $valid = $google2fa->verifyKey($secret, $otpSecret);
 

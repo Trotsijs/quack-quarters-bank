@@ -17,9 +17,9 @@
                             <option value="USD">USD</option>
                             <option value="EUR">EUR</option>
                         </select>
-                        <label for="otp_secret" class="mt-2 block text-gray-700 font-bold mb-2">2FA Code</label>
-                        <x-input id="otp_secret" placeholder="2FA Code" class="block mt-1 w-60" type="text"
-                                 name="otp_secret" :value="old('otp_secret')" required autofocus/>
+                        <label for="2fa_code" class="mt-2 block text-gray-700 font-bold mb-2">2FA Code</label>
+                        <x-input id="2fa_code" placeholder="2FA Code" class="block mt-1 w-60" type="text"
+                                 name="2fa_code" :value="old('2fa_code')" required autofocus/>
                         @if ($errors->any())
                             <div class="text-red-500 text-sm mt-1">
                                 {{ $errors->first()}}
