@@ -45,6 +45,7 @@ class DepositController extends Controller
         $account = BankAccount::where('owner_id', $user->id)->where('id', $accountId)->first();
 
         $transaction = Transaction::create([
+            'user_id' => $user->id,
             'from_account_id' => '',
             'to_account_id' => $accountId,
             'type' => 'Deposit',

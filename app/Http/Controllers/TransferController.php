@@ -52,6 +52,7 @@ class TransferController extends Controller
         $toAccount = BankAccount::where('account_number', $toAccountNumber)->first();
 
         $transaction = Transaction::create([
+            'user_id' => $user->id,
             'from_account_id' => $fromAccountId,
             'to_account_id' => $toAccountNumber,
             'type' => 'Transfer',

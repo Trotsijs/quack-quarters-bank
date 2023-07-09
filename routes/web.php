@@ -3,6 +3,7 @@
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\SecurityController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,9 @@ Route::post('/transfer', [TransferController::class, 'transfer'])
 
 Route::delete('/delete/{accountNumber}', [BankAccountController::class, 'delete'])
     ->middleware(['auth'])->name('delete');
+
+Route::get('/transactions', [TransactionController::class, 'index'])
+    ->middleware(['auth'])->name('transactions');
 
 
 Route::get('/security', [SecurityController::class, 'index'])->name('security');
