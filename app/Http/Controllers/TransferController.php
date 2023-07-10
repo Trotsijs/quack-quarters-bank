@@ -35,6 +35,7 @@ class TransferController extends Controller
         $toAccountNumber = $request->input('to_account');
         $amount = $request->input('amount');
         $otpSecret = $request->input('2fa_code');
+        $description = $request->input('description');
 
         $google2fa = new Google2FA();
         $secret = $user->otp_secret;
@@ -50,14 +51,15 @@ class TransferController extends Controller
             ->first();
 
         $toAccount = BankAccount::where('account_number', $toAccountNumber)->first();
+        $account = BankAccount::where('owner_id', $user->id)->where('id', $fromAccountId)->first();
 
         $transaction = Transaction::create([
             'user_id' => $user->id,
-            'from_account_id' => $fromAccountId,
-            'to_account_id' => $toAccountNumber,
+            'from_account_id' => $account->account_number,
+            'to_account_id' => $toAccount->account_number,
             'type' => 'Transfer',
             'amount' => $amount,
-            'description' => 'Transfer',
+            'description' => $description,
 
         ]);
 
@@ -68,7 +70,7 @@ class TransferController extends Controller
                 $fromAccount->save();
                 $toAccount->save();
 
-                return redirect()->back()->with('success', 'Transfer successful!');
+                return redirect()->route('transactions')->with('success', 'Transfer successful');
             } else {
                 return redirect()->back()->withErrors
                 (

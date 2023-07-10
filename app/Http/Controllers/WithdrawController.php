@@ -32,6 +32,7 @@ class WithdrawController extends Controller
         $accountId = $request->input('account');
         $amount = $request->input('amount');
         $otpSecret = $request->input('2fa_code');
+        $description = $request->input('description');
 
         $google2fa = new Google2FA();
         $secret = $user->otp_secret;
@@ -46,11 +47,11 @@ class WithdrawController extends Controller
 
         $transaction = Transaction::create([
             'user_id' => $user->id,
-            'from_account_id' => $accountId,
+            'from_account_id' => $account->account_number,
             'to_account_id' => '',
             'type' => 'Withdrawal',
             'amount' => $amount,
-            'description' => 'Withdrawal',
+            'description' => $description,
 
         ]);
 
@@ -59,7 +60,7 @@ class WithdrawController extends Controller
                 $account->balance -= $amount;
                 $account->save();
 
-                return redirect()->back()->with('success', 'Withdrawal successful');
+                return redirect()->route('transactions')->with('success', 'Withdraw successful');
             } else {
                 return redirect()->back()->withErrors
                 (

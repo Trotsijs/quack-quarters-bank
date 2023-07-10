@@ -32,6 +32,7 @@ class DepositController extends Controller
         $accountId = $request->input('account');
         $amount = $request->input('amount');
         $otpSecret = $request->input('2fa_code');
+        $description = $request->input('description');
 
         $google2fa = new Google2FA();
         $secret = $user->otp_secret;
@@ -46,11 +47,11 @@ class DepositController extends Controller
 
         $transaction = Transaction::create([
             'user_id' => $user->id,
-            'from_account_id' => '',
-            'to_account_id' => $accountId,
+            'from_account_id' => $account->account_number,
+            'to_account_id' => '',
             'type' => 'Deposit',
             'amount' => $amount,
-            'description' => 'Deposit',
+            'description' => $description,
 
         ]);
 
@@ -58,11 +59,8 @@ class DepositController extends Controller
             $account->balance += $amount;
             $account->save();
 
-            return redirect()->back()->with('success', 'Deposit successful');
+            return redirect()->route('transactions')->with('success', 'Deposit successful');
         }
-
-
-
 
         return redirect()->back()->with('error', 'Account not found');
     }

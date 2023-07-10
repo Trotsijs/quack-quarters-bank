@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\CryptoController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\TransactionController;
@@ -56,6 +57,9 @@ Route::delete('/delete/{accountNumber}', [BankAccountController::class, 'delete'
 
 Route::get('/transactions', [TransactionController::class, 'index'])
     ->middleware(['auth'])->name('transactions');
+
+Route::get('/crypto', [CryptoController::class, 'show'])
+    ->middleware(['auth'])->name('crypto');
 
 
 Route::get('/security', [SecurityController::class, 'index'])->name('security');

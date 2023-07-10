@@ -15,7 +15,7 @@
                         </thead>
                         <tbody>
                         @foreach ($accounts as $account)
-                            <tr class="">
+                            <tr class="border-b">
                                 <td class="p-2 text-left">{{ $account->account_number }}</td>
                                 <td class="p-2 text-right">Checking</td>
                                 <td class="p-2 text-right">{{ $account->currency }}</td>
@@ -26,11 +26,8 @@
                                     <form action="{{ route('delete', $account->account_number) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-white font-bold py-1 px-4 rounded mt-4 {{ $account->balance > 0 ? 'bg-gray-300' : 'bg-red-500 hover:bg-red-700' }}" {{ $account->balance > 0 ? 'disabled cursor-not-allowed' : '' }}>Delete</button>
+                                        <button type="submit" class="text-white font-bold py-1 px-4 rounded {{ $account->balance > 0 ? 'bg-gray-300' : 'bg-red-500 hover:bg-red-700' }}" {{ $account->balance > 0 ? 'disabled cursor-not-allowed' : '' }}>Delete</button>
                                     </form>
-
-
-
                                 </td>
                             </tr>
                         @endforeach

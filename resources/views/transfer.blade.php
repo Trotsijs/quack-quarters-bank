@@ -40,6 +40,12 @@
                         <div class="text-red-500 text-sm">{{ $message }}</div>
                         @enderror
 
+                        <label for="description" class="font-bold mb-2 mt-2">Description:</label>
+                        <div class="">
+                            <input class="border p-1 rounded input-field w-96 mt-2 mb-2" type="text" id="description"
+                                   name="description" placeholder="Enter Description" value="{{ old('amount') }}">
+                        </div>
+
                         <label for="2fa_code" class="font-bold mb-2 mt-2">2FA Code:</label>
                         <div class="">
                             <input class="border p-1 rounded input-field w-96 mt-2 mb-2" type="text" id="2fa_code"

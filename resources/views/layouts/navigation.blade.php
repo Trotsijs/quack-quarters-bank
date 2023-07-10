@@ -30,6 +30,12 @@
                     <x-nav-link :href="route('transfer')" :active="request()->routeIs('transfer')">
                         {{ __('Transfer') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('transactions')" :active="request()->routeIs('transactions')">
+                        {{ __('Transactions') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('crypto')" :active="request()->routeIs('crypto')">
+                        {{ __('Crypto') }}
+                    </x-nav-link>
                 </div>
             </div>
 
