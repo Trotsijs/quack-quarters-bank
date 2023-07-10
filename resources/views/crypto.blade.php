@@ -7,10 +7,10 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
+            <div class="bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-gray-50 border-b border-gray-200">
                     <table class="table w-full">
-                    <thead class="bg-orange-300">
+                    <thead class="border-b-4">
                     <tr>
                         <th class="w-5 p-2 text-center">#</th>
                         <th class="p-2 text-justify">Name</th>
