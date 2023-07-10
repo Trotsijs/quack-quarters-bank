@@ -16,9 +16,11 @@ class CryptoController extends Controller
     {
         $cryptoApiService = new CryptoApiService();
         $coins = $cryptoApiService->getReport();
-
+//        var_dump($coins);die;
         return view('crypto', [
             'coins' => $coins,
         ]);
+
+
     }
 }
