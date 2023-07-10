@@ -14,7 +14,7 @@
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
-
+            <x-application-logo-black class="w-96 h-20"/>
             <!-- Email Address -->
             <div>
                 <x-label for="email" :value="__('Email')" />
