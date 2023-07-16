@@ -58,8 +58,11 @@ Route::delete('/delete/{accountNumber}', [BankAccountController::class, 'delete'
 Route::get('/transactions', [TransactionController::class, 'index'])
     ->middleware(['auth'])->name('transactions');
 
-Route::get('/crypto', [CryptoController::class, 'show'])
+Route::get('/crypto', [CryptoController::class, 'index'])
     ->middleware(['auth'])->name('crypto');
+
+Route::get('/coin/{id}', [CryptoController::class, 'showSingleCoin'])
+    ->middleware(['auth'])->name('singleCoin');
 
 
 Route::get('/security', [SecurityController::class, 'index'])->name('security');

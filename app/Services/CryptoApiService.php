@@ -27,4 +27,19 @@ class CryptoApiService
 
         return json_decode($response->getBody()->getContents());
     }
+
+    public function getById($id)
+    {
+        $url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?id=' . $id;
+        $headers = [
+            'X-CMC_PRO_API_KEY' => env('CRYPTO_API_KEY'),
+            'Accept' => 'application/json',
+        ];
+
+        $response = $this->client->request('GET', $url, [
+            'headers' => $headers,
+        ]);
+
+        return json_decode($response->getBody()->getContents());
+    }
 }
