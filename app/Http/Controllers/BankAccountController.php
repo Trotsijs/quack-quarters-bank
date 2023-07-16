@@ -17,14 +17,18 @@ class BankAccountController extends Controller
     {
         $user = Auth::user();
         $accounts = $user->accounts;
+        $savingsAccounts = [];
+        $checkingAccounts = [];
 
-        if ($accounts) {
-            $accounts = $accounts->all();
-        } else {
-            $accounts = [];
+        foreach ($accounts as $account) {
+            if ($account->account_type === 'savings') {
+                $savingsAccounts[] = $account;
+            } elseif ($account->account_type === 'checking') {
+                $checkingAccounts[] = $account;
+            }
         }
 
-        return view('accounts', compact('accounts'));
+        return view('accounts', compact('savingsAccounts', 'checkingAccounts'));
     }
 
 
@@ -47,7 +51,9 @@ class BankAccountController extends Controller
         }
 
         $user = Auth::user();
-        $accountNumber = $this->createAccountNumber();
+        $accountType = $request->input('account_type');
+        $accountNumber =
+            ($accountType === 'savings') ? $this->createSavingsAccountNumber() : $this->createAccountNumber();
 
         $google2fa = new Google2FA();
         $secret = $user->otp_secret;
@@ -61,6 +67,7 @@ class BankAccountController extends Controller
 
         BankAccount::create([
             'owner_id' => $user->id,
+            'account_type' => $request->input('account_type'),
             'account_number' => $accountNumber,
             'balance' => 0,
             'currency' => $request->input('currency'),
@@ -74,7 +81,7 @@ class BankAccountController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make(['account_number' => $accountNumber], [
-            'account_number' => 'required|exists:bank_accounts,account_number,owner_id,' . $user->id
+            'account_number' => 'required|exists:bank_accounts,account_number,owner_id,' . $user->id,
         ]);
 
         if ($validator->fails()) {
@@ -93,7 +100,6 @@ class BankAccountController extends Controller
     }
 
 
-
     private function createAccountNumber(): string
     {
         $accountNumber = 'LV07QUACK0000' . rand(100000000, 999999999);
@@ -106,5 +112,19 @@ class BankAccountController extends Controller
         }
 
         return $accountNumber;
+    }
+
+    private function createSavingsAccountNumber(): string
+    {
+        $savingsAccountNumber = 'LV07QSAVE0000' . rand(100000000, 999999999);
+        $validator = Validator::make(['account_number' => $savingsAccountNumber], [
+            'account_number' => 'unique:bank_accounts,account_number',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->createAccountNumber();
+        }
+
+        return $savingsAccountNumber;
     }
 }

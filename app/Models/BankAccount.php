@@ -11,6 +11,7 @@ class BankAccount extends Model
 
     protected $fillable = [
         'account_number',
+        'account_type',
         'owner_id',
         'balance',
         'currency',

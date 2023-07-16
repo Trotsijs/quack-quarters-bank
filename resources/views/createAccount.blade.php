@@ -11,12 +11,22 @@
                 <div class="p-6 bg-white border-b border-gray-200 flex-col ">
                     <form action="{{ route('create') }}" method="POST">
                         @csrf
+                        <div>
                         <label for="currency" class="block text-gray-700 font-bold mb-2">Currency</label>
                         <select id="currency" name="currency"
-                                class="text-gray-700 border border-gray-300 rounded py-2 px-4 w-60">
+                                class="text-gray-700 border border-gray-300 rounded py-2 px-4 w-60 mb-2">
                             <option value="USD">USD</option>
                             <option value="EUR">EUR</option>
                         </select>
+                        </div>
+                        <div>
+                            <label for="account_type" class="block text-gray-700 font-bold mb-2">Account type</label>
+                            <select id="account_type" name="account_type"
+                                    class="text-gray-700 border border-gray-300 rounded py-2 px-4 w-60">
+                                <option value="checking">Checking</option>
+                                <option value="savings">Savings</option>
+                            </select>
+                        </div>
                         <label for="2fa_code" class="mt-2 block text-gray-700 font-bold mb-2">2FA Code</label>
                         <x-input id="2fa_code" placeholder="2FA Code" class="block mt-1 w-60" type="text"
                                  name="2fa_code" :value="old('2fa_code')" required autofocus/>
