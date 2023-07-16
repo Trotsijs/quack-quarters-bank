@@ -22,7 +22,8 @@ class CryptoController extends Controller
     public function showSingleCoin($id)
     {
         $cryptoApiService = new CryptoApiService();
-        $coin = $cryptoApiService->getById($id);
+        $coin = $cryptoApiService->getInfoById($id);
+        $coinInfo = $cryptoApiService->getCoinById($id)->quote->USD;;
         foreach ($coin->data as $coin) {
             $coin = new CryptoCoin(
                 [
@@ -31,12 +32,14 @@ class CryptoController extends Controller
                     'logo' => $coin->logo,
                     'description' => $coin->description,
                     'website' => $coin->urls->website[0],
+
                 ]
             );
         }
 
         return view('singleCoin', [
             'coin' => $coin,
+            'coinInfo' => $coinInfo,
         ]);
     }
 }

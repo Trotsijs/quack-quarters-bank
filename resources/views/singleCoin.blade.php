@@ -10,12 +10,12 @@
             <div class="bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-gray-50 border-b border-gray-200">
                     <div class="flex justify-center">
-                        <img src="{{$coin->logo}}" alt="">
+                        <img src="{{$coin->logo}}" alt="" height="64" width="64">
                     </div>
 
                     <div class="text-center text-3xl font-bold">{{$coin->name}}</div>
                     <div class="text-center text-xl text-gray-400">({{$coin->symbol}})</div>
-                    <div class="text-center">{{$coin->price}}</div>
+                    <div class="text-center">{{number_format($coinInfo->price, 2)}}</div>
                 </div>
             </div>
         </div>
