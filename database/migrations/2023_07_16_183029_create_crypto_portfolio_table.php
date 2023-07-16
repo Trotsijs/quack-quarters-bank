@@ -19,7 +19,7 @@ class CreateCryptoPortfolioTable extends Migration
             $table->string('coin_id');
             $table->string('coin_symbol');
             $table->float('amount');
-            $table->integer('account_number');
+            $table->integer('account_id');
             $table->float('buy_price');
         });
     }
