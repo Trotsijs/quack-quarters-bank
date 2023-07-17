@@ -69,6 +69,9 @@ Route::get('/coin/{id}', [CryptoController::class, 'showSingleCoin'])
 Route::post('/coin/{id}/{symbol}/{price}/buy', [CryptoController::class, 'buyCrypto'])
     ->middleware(['auth'])->name('buyCrypto');
 
+Route::post('/coin/{id}/{symbol}/{price}/sell', [CryptoController::class, 'sellCrypto'])
+    ->middleware(['auth'])->name('sellCrypto');
+
 Route::get('/crypto-transactions', [CryptoTransactionController::class, 'index'])
     ->middleware(['auth'])->name('cryptoTransactions');
 

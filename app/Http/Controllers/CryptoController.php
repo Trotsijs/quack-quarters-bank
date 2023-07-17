@@ -7,6 +7,7 @@ use App\Models\CryptoCoin;
 use App\Models\CryptoTransaction;
 use App\Models\Portfolio;
 use App\Services\CryptoApiService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,7 +52,7 @@ class CryptoController extends Controller
         ]);
     }
 
-    public function buyCrypto(Request $request, $coinId, $coinSymbol, $coinPrice)
+    public function buyCrypto(Request $request, $coinId, $coinSymbol, $coinPrice): RedirectResponse
     {
         $user = Auth::user();
         $fromAccountId = $request->input('from_account');
@@ -75,8 +76,8 @@ class CryptoController extends Controller
                 'account_id' => $fromAccount->id,
                 'coin_id' => $coinId,
                 'coin_symbol' => $coinSymbol,
-                'buy_price' => $coinPrice,
                 'amount' => $amount,
+                'owner_id' => $user->id,
             ]);
         }
 
@@ -94,7 +95,52 @@ class CryptoController extends Controller
         $fromAccount->balance -= $amount * $coinPrice;
         $fromAccount->save();
 
-        return redirect()->route('cryptoTransactions')->with('success', 'You have successfully bought ' . $amount . ' ' . $coinSymbol . ' for ' . $amount * $coinPrice . ' USD');
+        return redirect()->route('cryptoTransactions')->with('Transaction successful');
     }
+
+    public function sellCrypto(Request $request, $coinId, $coinSymbol, $coinPrice): RedirectResponse
+    {
+        $user = Auth::user();
+        $fromAccountId = $request->input('from_account');
+        $amount = $request->input('amount');
+        $otpSecret = $request->input('2fa_code');
+
+        $fromAccount = BankAccount::where('owner_id', $user->id)
+            ->where('id', $fromAccountId)
+            ->first();
+
+        $existingPortfolio = Portfolio::where('account_id', $fromAccount->id)
+            ->where('coin_id', $coinId)
+            ->first();
+
+        if ($existingPortfolio) {
+            if ($existingPortfolio->amount < $amount) {
+                return redirect()->back()->with('error', 'Insufficient amount of ' . $coinSymbol . ' in your portfolio.');
+            }
+            $existingPortfolio->amount -= $amount;
+            $existingPortfolio->save();
+        } else {
+            return redirect()->back()->with('error', 'You do not have ' . $coinSymbol . ' in your portfolio.');
+        }
+
+        CryptoTransaction::create([
+            'user_id' => $user->id,
+            'account_id' => $fromAccount->id,
+            'coin_id' => $coinId,
+            'coin_symbol' => $coinSymbol,
+            'coin_price' => $coinPrice,
+            'coin_amount' => $amount,
+            'type' => 'Sell',
+            'spent' => $amount * $coinPrice,
+        ]);
+
+        $fromAccount->balance += $amount * $coinPrice;
+        $fromAccount->save();
+
+        return redirect()
+            ->route('cryptoTransactions')
+            ->with('Transaction successful');
+    }
+
 
 }

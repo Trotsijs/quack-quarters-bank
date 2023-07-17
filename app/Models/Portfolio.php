@@ -15,7 +15,7 @@ class Portfolio extends Model
         'account_id',
         'coin_id',
         'coin_symbol',
-        'buy_price',
         'amount',
+        'owner_id',
     ];
 }

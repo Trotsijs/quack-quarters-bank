@@ -15,12 +15,12 @@ class CreateCryptoPortfolioTable extends Migration
     {
         Schema::create('crypto_portfolio', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('coin_id');
             $table->string('coin_symbol');
-            $table->float('amount');
+            $table->decimal('amount', 18, 10);
             $table->integer('account_id');
-            $table->float('buy_price');
+            $table->integer('owner_id');
+            $table->timestamps();
         });
     }
 

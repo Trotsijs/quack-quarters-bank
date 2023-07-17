@@ -86,6 +86,16 @@
                                     </div>
                                 </div>
                             </x-dropdown-link>
+                            <x-dropdown-link :href="route('cryptoTransactions')">
+                                <div class="flex items-center gap-x-2">
+                                    <div>
+                                        <x-transaction-history-icon/>
+                                    </div>
+                                    <div>
+                                        {{ __('Crypto Transactions') }}
+                                    </div>
+                                </div>
+                            </x-dropdown-link>
 
                         </x-slot>
                     </x-dropdown>
