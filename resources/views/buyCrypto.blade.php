@@ -7,19 +7,9 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-gray-50 border-b border-gray-200">
-                    <div class="flex justify-center">
-                        <img src="{{$coin->logo}}" alt="" height="64" width="64">
-                    </div>
-
-                    <div class="text-center text-3xl font-bold">{{$coin->name}}</div>
-                    <div class="text-center text-xl text-gray-400">({{$coin->symbol}})</div>
-                    <div class="text-center">{{number_format($coinInfo->price, 2)}}</div>
-                    <div class="flex justify-center">
-                    <form method="POST"
-                          action="{{ route('buyCrypto', ['id' => $coinId, 'symbol' => $coinSymbol, 'price' => $coinPrice]) }}">
-
+            <div class="flex justify-center items-center flex-col bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <form method="POST" action="{{ route('buyCrypto') }}">
                         @csrf
                         <label for="from_account" class="font-bold mb-2 mt-2">From Account:</label>
                         <div class="flex gap-x-2 items-center">
@@ -27,8 +17,7 @@
                             <div x-data="{ selectedAccountType: 'savings' }">
                                 <select id="from_account" name="from_account" class="border p-1 rounded w-96 mt-2 mb-2">
                                     @foreach (Auth::user()->accounts as $account)
-                                        <option x-show="{{ $account->account_type === 'savings' }}"
-                                                value="{{ $account->id }}">
+                                        <option x-show="{{ $account->account_type === 'savings' }}" value="{{ $account->id }}">
                                             {{ $account->account_number }} {{ number_format($account->balance, 2) }} {{ $account->currency }}
                                         </option>
                                     @endforeach
@@ -44,6 +33,24 @@
                         @error('amount')
                         <div class="text-red-500 text-sm">{{ $message }}</div>
                         @enderror
+
+                        <label for="coin_id" class="font-bold mb-2 mt-2">Coin ID:</label>
+                        <div class="">
+                            <input class="border p-1 rounded input-field w-96 mt-2 mb-2" type="text" id="coin_id"
+                                   name="coin_id" placeholder="Enter Amount" value="{{ old('coin_id') }}">
+                        </div>
+
+                        <label for="coin_symbol" class="font-bold mb-2 mt-2">Coin symbol:</label>
+                        <div class="">
+                            <input class="border p-1 rounded input-field w-96 mt-2 mb-2" type="text" id="coin_symbol"
+                                   name="coin_symbol" placeholder="Enter Amount" value="{{ old('coin_symbol') }}">
+                        </div>
+
+                        <label for="buy_price" class="font-bold mb-2 mt-2">Buy Price:</label>
+                        <div class="">
+                            <input class="border p-1 rounded input-field w-96 mt-2 mb-2" type="text" id="buy_price"
+                                   name="buy_price" placeholder="Enter Amount" value="{{ old('buy_price') }}">
+                        </div>
 
                         <label for="2fa_code" class="font-bold mb-2 mt-2">2FA Code:</label>
                         <div class="">
@@ -66,10 +73,8 @@
                             </button>
                         </div>
                     </form>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
-

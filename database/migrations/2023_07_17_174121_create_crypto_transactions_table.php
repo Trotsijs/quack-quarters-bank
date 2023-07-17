@@ -20,7 +20,8 @@ class CreateCryptoTransactionsTable extends Migration
             $table->string('coin_id');
             $table->string('coin_symbol');
             $table->float('coin_price');
-            $table->float('coin_amount');
+            $table->decimal('coin_amount', 18, 10);
+            $table->decimal('spent', 18, 10);
             $table->string('type');
             $table->timestamps();
         });

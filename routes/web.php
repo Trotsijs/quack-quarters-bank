@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\CryptoController;
+use App\Http\Controllers\CryptoTransactionController;
 use App\Http\Controllers\DepositController;
+use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransferController;
@@ -64,7 +66,22 @@ Route::get('/crypto', [CryptoController::class, 'index'])
 Route::get('/coin/{id}', [CryptoController::class, 'showSingleCoin'])
     ->middleware(['auth'])->name('singleCoin');
 
+Route::post('/coin/{id}/{symbol}/{price}/buy', [CryptoController::class, 'buyCrypto'])
+    ->middleware(['auth'])->name('buyCrypto');
+
+Route::get('/crypto-transactions', [CryptoTransactionController::class, 'index'])
+    ->middleware(['auth'])->name('cryptoTransactions');
+
 
 Route::get('/security', [SecurityController::class, 'index'])->name('security');
+Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
+
+
+//Route::get('/buy', [CryptoTransactionController::class, 'index'])->name('buyCrypto');
+//Route::post('/buy', [CryptoTransactionController::class, 'buyCrypto'])->name('buyCrypto');
+
+
+
+
 
 require __DIR__.'/auth.php';
