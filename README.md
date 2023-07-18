@@ -12,7 +12,7 @@ The project is a Laravel-based internet banking application that enables users t
 ### Preview
 
 🟣 Log in page:
-<p align="center"><img src="login.gif" width="1000"></p>
+<p align="center"><img src="login.gif" width="1200"></p>
 
 🟣 Two-factor authentication:
 <p align="center"><img src="two-factor.gif" width="600"></p>
