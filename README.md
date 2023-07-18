@@ -9,7 +9,7 @@
 
 The project is a Laravel-based internet banking application that enables users to register, log in, and perform various banking operations. Users can open both regular and savings accounts, deposit and withdraw money, and transfer funds between accounts. The application also incorporates a two-factor authentication (2FA) system to enhance security. Additionally, the savings account feature allows users to buy and sell cryptocurrencies and view their holdings in a portfolio.
 
-### Preview
+### ⬇️ Preview
 
 🟣 Log in page:
 <p align="center"><img src="login.gif" width="1200"></p>
@@ -32,10 +32,13 @@ The project is a Laravel-based internet banking application that enables users t
 🟣 View portfolio and sell cryptocurrencies:
 <p align="center"><img src="portfolio.gif" width="1200"></p>
 
-### How to run project locally
+### ⬇️ How to run project locally
 
 1. Clone or download the project
-2. Run 
+```
+git clone https://github.com/Trotsijs/products-page.git
+```
+2. Run these commands in the project directory to install dependencies
 ```
 composer install
 ```
@@ -55,16 +58,16 @@ DB_DATABASE=laravel
 DB_USERNAME=root
 DB_PASSWORD=
 ```
-7. Run `php artisan migrate` to create the database tables
+7. Run this command to migrate the database
 ```
 php artisan migrate
 ```
 
-9. Start server
+9. Start server by running this command
 ```
 php artisan serve
 ```
-10. Run `npm run dev` to compile the assets
+10. Run this command to compile assets
 ```
 npm run dev
 ``` 
