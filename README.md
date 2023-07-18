@@ -8,3 +8,65 @@
 ## About 
 
 The project is a Laravel-based internet banking application that enables users to register, log in, and perform various banking operations. Users can open both regular and savings accounts, deposit and withdraw money, and transfer funds between accounts. The application also incorporates a two-factor authentication (2FA) system to enhance security. Additionally, the savings account feature allows users to buy and sell cryptocurrencies and view their holdings in a portfolio.
+
+### Preview
+
+🟣 Log in page:
+<p align="center"><img src="login.gif" width="600"></p>
+
+🟣 Two-factor authentication:
+<p align="center"><img src="two-factor.gif" width="600"></p>
+
+🟣 Create accounts and delete:
+<p align="center"><img src="create_new_account.gif" width="600"></p>
+
+🟣 Deposit and withdraw money:
+<p align="center"><img src="deposit.gif" width="600"></p>
+
+🟣 Transfer money between accounts:
+<p align="center"><img src="transfer.gif" width="600"></p>
+
+🟣 Buy cryptocurrencies:
+<p align="center"><img src="buy_crypto.gif" width="600"></p>
+
+🟣 View portfolio and sell cryptocurrencies:
+<p align="center"><img src="portfolio.gif" width="600"></p>
+
+### How to run project locally
+
+1. Clone or download the project
+2. Run 
+```
+composer install
+```
+and
+```
+npm install
+```
+3. Rename `.env.example` to `.env`
+4. Get an API key from [CoinMarketCap API](https://coinmarketcap.com/api/)
+5. Add the API key to the `.env` file as `CRYPTO_API_KEY=your_api_key`
+6. Create a database and add the database credentials to the `.env` file
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
+7. Run `php artisan migrate` to create the database tables
+```
+php artisan migrate
+```
+
+9. Start server
+```
+php artisan serve
+```
+10. Run `npm run dev` to compile the assets
+```
+npm run dev
+``` 
+
+11. Go to http://127.0.0.1:8000 in your browser

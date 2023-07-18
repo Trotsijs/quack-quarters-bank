@@ -7,10 +7,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg mb-4">
+                <div class="text-center text-3xl font-bold mb-1 mt-4">My Portfolio</div>
+                <div class="text-center text-xl font-bold mb-4 text-green-500">${{number_format($totalPortfolioValue, 2)}}</div>
+            </div>
             <div class="bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-gray-50 border-b border-gray-200">
-                    <div class="text-center text-3xl font-bold mb-4">Portfolio</div>
-                    <div class="text-center text-xl font-bold mb-4">${{number_format($totalPortfolioValue, 2)}}</div>
+
                     <table class="table w-full">
                         <thead class="border-b-4">
                         <tr>

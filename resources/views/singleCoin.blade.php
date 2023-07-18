@@ -15,7 +15,7 @@
 
                     <div class="text-center text-3xl font-bold">{{$coin->name}}</div>
                     <div class="text-center text-xl text-gray-400">({{$coin->symbol}})</div>
-                    <div class="text-center">{{number_format($coinInfo->price, 2)}}</div>
+                    <div class="text-center text-green-600">${{number_format($coinInfo->price, 2)}}</div>
                     <div class="flex justify-center">
                         <form x-data="{ transactionType: 'buy' }"
                               :action="transactionType === 'buy' ? '{{ route('buyCrypto', ['id' => $coinId, 'symbol' => $coinSymbol, 'price' => $coinPrice]) }}' : '{{ route('sellCrypto', ['id' => $coinId, 'symbol' => $coinSymbol, 'price' => $coinPrice]) }}'"
