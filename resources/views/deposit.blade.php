@@ -11,7 +11,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <form method="POST" action="{{ route('deposit') }}">
                         @csrf
-                        <label for="account" class="font-bold mb-2 mt-2">Select Account:</label>
+                        <label for="account" class="block text-gray-700 font-bold mb-2">Select Account:</label>
                         <div class="flex gap-x-2 items-center">
 
                             <select id="account" name="account" class="text-gray-700 border border-gray-300 rounded py-2 px-4 text-sm w-96">
