@@ -22,29 +22,27 @@
                               method="POST">
 
                             @csrf
-                            <label for="transaction_type" class="font-bold mb-2 mt-2">Transaction Type:</label>
+                            <label for="transaction_type" class="block text-gray-700 font-bold mb-2">Transaction Type:</label>
                             <div class="flex gap-x-2 items-center">
                                 <select id="transaction_type" name="transaction_type"
-                                        class="border p-1 rounded w-96 mt-2 mb-2" x-model="transactionType">
+                                        class="text-gray-700 border border-gray-300 rounded py-2 px-4 w-96" x-model="transactionType">
                                     <option value="buy">Buy</option>
                                     <option value="sell">Sell</option>
                                 </select>
                             </div>
 
-                            <label for="amount" class="font-bold mb-2 mt-2">Amount:</label>
+                            <label for="amount" class="mt-2 block text-gray-700 font-bold mb-2">Amount:</label>
                             <div class="">
-                                <input class="border p-1 rounded input-field w-96 mt-2 mb-2" type="text" id="amount"
-                                       name="amount" placeholder="Enter Amount" value="{{ old('amount') }}">
+                                <x-input class="block mt-1 w-96" type="text" id="amount"
+                                         name="amount" placeholder="Enter Amount" value="{{ old('amount') }}" />
                             </div>
                             @error('amount')
                             <div class="text-red-500 text-sm">{{ $message }}</div>
                             @enderror
 
-                            <label for="2fa_code" class="font-bold mb-2 mt-2">2FA Code:</label>
-                            <div class="">
-                                <input class="border p-1 rounded input-field w-96 mt-2 mb-2" type="text" id="2fa_code"
-                                       name="2fa_code" placeholder="Enter code" value="{{ old('2fa_code') }}">
-                            </div>
+                            <label for="2fa_code" class="mt-2 block text-gray-700 font-bold mb-2">2FA Code</label>
+                            <x-input id="2fa_code" placeholder="2FA Code" class="block mt-1 w-96" type="text"
+                                     name="2fa_code" :value="old('2fa_code')"/>
                             @error('2fa_code')
                             <div class="text-red-500 text-sm">{{ $message }}</div>
                             @enderror
