@@ -28,7 +28,7 @@
                                         height="25" width="25" alt=""> {{ $data->coin_symbol }}</td>
                                 <td class="p-2 text-right font-bold">{{ number_format($data->amount, 10) }}</td>
                                 <td class="p-2 text-right font-bold">${{ number_format($data->coin_value, 2) }}</td>
-                                <td class="w-5 p-2 text-right font-bold">Trade</td>
+                                <td class="w-5 p-2 text-right font-bold"><a href="coin/{{$data->coin_id}}"><button class="bg-purple-900 hover:bg-purple-500 px-2 text-white rounded">Trade</button></a></td>
                             </tr>
 
                         @endforeach
