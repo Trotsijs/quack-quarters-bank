@@ -7,7 +7,14 @@
 
 ## About 
 
-The project is a Laravel-based internet banking application that enables users to register, log in, and perform various banking operations. Users can open both regular and savings accounts, deposit and withdraw money, and transfer funds between accounts. The application also incorporates a two-factor authentication (2FA) system to enhance security. Additionally, the savings account feature allows users to buy and sell cryptocurrencies and view their holdings in a portfolio.
+The project is a Laravel-based internet banking application with the following features:
+- User registration and login functionality.
+- Creation of bank accounts and savings accounts.
+- Convenient deposit and withdrawal options.
+- Secure inter-account transfers.
+- Ability to buy and sell cryptocurrencies from savings accounts.
+- Portfolio view to track cryptocurrency investments.
+- Enhanced security with Two-Factor Authentication (2FA) approval for all transactions.
 
 ### ⬇️ Preview
 
