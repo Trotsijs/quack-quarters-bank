@@ -15,22 +15,22 @@ The project is a Laravel-based internet banking application that enables users t
 <p align="center"><img src="login.gif" width="1200"></p>
 
 🟣 Two-factor authentication:
-<p align="center"><img src="two-factor.gif" width="600"></p>
+<p align="center"><img src="two-factor.gif" width="1200"></p>
 
 🟣 Create accounts and delete:
-<p align="center"><img src="create_new_account.gif" width="600"></p>
+<p align="center"><img src="create_new_account.gif" width="1200"></p>
 
 🟣 Deposit and withdraw money:
-<p align="center"><img src="deposit.gif" width="600"></p>
+<p align="center"><img src="deposit.gif" width="1200"></p>
 
 🟣 Transfer money between accounts:
-<p align="center"><img src="transfer.gif" width="600"></p>
+<p align="center"><img src="transfer.gif" width="1200"></p>
 
 🟣 Buy cryptocurrencies:
-<p align="center"><img src="buy_crypto.gif" width="600"></p>
+<p align="center"><img src="buy_crypto.gif" width="1200"></p>
 
 🟣 View portfolio and sell cryptocurrencies:
-<p align="center"><img src="portfolio.gif" width="600"></p>
+<p align="center"><img src="portfolio.gif" width="1200"></p>
 
 ### How to run project locally
 
