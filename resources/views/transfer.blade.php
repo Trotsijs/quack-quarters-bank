@@ -11,46 +11,44 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <form method="POST" action="{{ route('transfer') }}">
                         @csrf
-                        <label for="from_account" class="font-bold mb-2 mt-2">From Account:</label>
+                        <label for="from_account" class="block text-gray-700 font-bold mb-2">From Account:</label>
                         <div class="flex gap-x-2 items-center">
 
-                            <select id="from_account" name="from_account" class="border p-1 rounded w-96 mt-2 mb-2">
+                            <select id="from_account" name="from_account" class="text-gray-700 border border-gray-300 rounded py-2 px-4 text-sm w-96">
                                 @foreach (Auth::user()->accounts as $account)
                                     <option
                                         value="{{ $account->id }}">{{ $account->account_number }} {{ number_format($account->balance, 2) }} {{ $account->currency }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <label for="to_account" class="font-bold mb-2 mt-2">To Account:</label>
+                        <label for="to_account" class="mt-2 block text-gray-700 font-bold mb-2">To Account:</label>
                         <div class="">
-                            <input class="border p-1 rounded input-field w-96 mb-2 mt-2" type="text" id="to_account"
+                            <x-input class="block mt-1 w-96" type="text" id="to_account"
                                    name="to_account" placeholder="Enter Account Number"
-                                   value="{{ old('to_account') }}">
+                                   value="{{ old('to_account') }}" />
                         </div>
                         @error('to_account')
                         <div class="text-red-500 text-sm rounded">{{ $message }}</div>
                         @enderror
 
-                        <label for="amount" class="font-bold mb-2 mt-2">Amount:</label>
+                        <label for="amount" class="mt-2 block text-gray-700 font-bold mb-2">Amount:</label>
                         <div class="">
-                            <input class="border p-1 rounded input-field w-96 mt-2 mb-2" type="text" id="amount"
-                                   name="amount" placeholder="Enter Amount" value="{{ old('amount') }}">
+                            <x-input class="block mt-1 w-96" type="text" id="amount"
+                                   name="amount" placeholder="Enter Amount" value="{{ old('amount') }}" />
                         </div>
                         @error('amount')
                         <div class="text-red-500 text-sm">{{ $message }}</div>
                         @enderror
 
-                        <label for="description" class="font-bold mb-2 mt-2">Description:</label>
+                        <label for="description" class="mt-2 block text-gray-700 font-bold mb-2">Description:</label>
                         <div class="">
-                            <input class="border p-1 rounded input-field w-96 mt-2 mb-2" type="text" id="description"
-                                   name="description" placeholder="Enter Description" value="{{ old('amount') }}">
+                            <x-input class="block mt-1 w-96" type="text" id="description"
+                                     name="description" placeholder="Enter Description" value="{{ old('description') }}" />
                         </div>
 
-                        <label for="2fa_code" class="font-bold mb-2 mt-2">2FA Code:</label>
-                        <div class="">
-                            <input class="border p-1 rounded input-field w-96 mt-2 mb-2" type="text" id="2fa_code"
-                                   name="2fa_code" placeholder="Enter code" value="{{ old('2fa_code') }}">
-                        </div>
+                        <label for="2fa_code" class="mt-2 block text-gray-700 font-bold mb-2">2FA Code</label>
+                        <x-input id="2fa_code" placeholder="2FA Code" class="block mt-1 w-96" type="text"
+                                 name="2fa_code" :value="old('2fa_code')"/>
                         @error('2fa_code')
                         <div class="text-red-500 text-sm">{{ $message }}</div>
                         @enderror
