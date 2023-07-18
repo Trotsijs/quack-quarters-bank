@@ -16,6 +16,7 @@
                             <th class="w-5 p-2 text-center">#</th>
                             <th class="p-2 text-justify">Name</th>
                             <th class="p-2 text-right">Price</th>
+                            <th class="p-2 text-right">1h%</th>
                             <th class="p-2 text-right">24h%</th>
                             <th class="p-2 text-right">7d%</th>
                             <th class="p-2 text-right">Market Cap</th>
@@ -26,13 +27,15 @@
                         @foreach($coins->data as $coin)
                             <tr class="border-b hover:bg-gray-200">
                                 <td class="w-5 p-2 text-center">{{ $coin->cmc_rank }}</td>
-{{--                                <img src="" height="25" width="25">--}}
                                 <td class="p-2 text-left font-bold flex gap-x-2"><img
                                         src="https://s2.coinmarketcap.com/static/img/coins/64x64/{{ $coin->id }}.png"
                                         height="25" width="25"> <a href="coin/{{$coin->id}}">{{ $coin->name }}</a><span
                                         class="font-bold text-gray-500">{{ $coin->symbol }}</span></td>
                                 <td class="p-2 text-right font-bold">
                                     ${{ number_format($coin->quote->USD->price, 2) }}</td>
+                                <td class="p-2 text-right font-bold @if($coin->quote->USD->percent_change_1h < 0) text-red-500 @else text-green-500 @endif">
+                                    {{ number_format($coin->quote->USD->percent_change_1h, 2) }}%
+                                </td>
                                 <td class="p-2 text-right font-bold @if($coin->quote->USD->percent_change_24h < 0) text-red-500 @else text-green-500 @endif">
                                     {{ number_format($coin->quote->USD->percent_change_24h, 2) }}%
                                 </td>

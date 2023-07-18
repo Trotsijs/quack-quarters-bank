@@ -96,16 +96,6 @@
                                     </div>
                                 </div>
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('portfolio')">
-                                <div class="flex items-center gap-x-2">
-                                    <div>
-                                        <x-transaction-history-icon/>
-                                    </div>
-                                    <div>
-                                        {{ __('Portfolio') }}
-                                    </div>
-                                </div>
-                            </x-dropdown-link>
 
                         </x-slot>
                     </x-dropdown>
@@ -144,7 +134,16 @@
                                         {{ __('New Account') }}
                                     </div>
                                 </div>
-
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('portfolio')">
+                                <div class="flex items-center gap-x-2">
+                                    <div>
+                                        <x-portfolio-icon/>
+                                    </div>
+                                    <div>
+                                        {{ __('Crypto Portfolio') }}
+                                    </div>
+                                </div>
                             </x-dropdown-link>
 
                             <x-dropdown-link :href="route('security')">

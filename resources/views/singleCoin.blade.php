@@ -30,21 +30,6 @@
                                     <option value="sell">Sell</option>
                                 </select>
                             </div>
-                            <label for="from_account" class="font-bold mb-2 mt-2">Account:</label>
-                            <div class="flex gap-x-2 items-center">
-
-                                <div x-data="{ selectedAccountType: 'savings' }">
-                                    <select id="from_account" name="from_account"
-                                            class="border p-1 rounded w-96 mt-2 mb-2">
-                                        @foreach (Auth::user()->accounts as $account)
-                                            <option x-show="{{ $account->account_type === 'savings' }}"
-                                                    value="{{ $account->id }}">
-                                                {{ $account->account_number }} {{ number_format($account->balance, 2) }} {{ $account->currency }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
 
                             <label for="amount" class="font-bold mb-2 mt-2">Amount:</label>
                             <div class="">

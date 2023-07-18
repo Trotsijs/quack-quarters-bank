@@ -55,12 +55,11 @@ class CryptoController extends Controller
     public function buyCrypto(Request $request, $coinId, $coinSymbol, $coinPrice): RedirectResponse
     {
         $user = Auth::user();
-        $fromAccountId = $request->input('from_account');
         $amount = $request->input('amount');
         $otpSecret = $request->input('2fa_code');
 
         $fromAccount = BankAccount::where('owner_id', $user->id)
-            ->where('id', $fromAccountId)
+            ->where('account_type', 'savings')
             ->first();
 
 
@@ -101,12 +100,11 @@ class CryptoController extends Controller
     public function sellCrypto(Request $request, $coinId, $coinSymbol, $coinPrice): RedirectResponse
     {
         $user = Auth::user();
-        $fromAccountId = $request->input('from_account');
         $amount = $request->input('amount');
         $otpSecret = $request->input('2fa_code');
 
         $fromAccount = BankAccount::where('owner_id', $user->id)
-            ->where('id', $fromAccountId)
+            ->where('account_type', 'savings')
             ->first();
 
         $existingPortfolio = Portfolio::where('account_id', $fromAccount->id)
