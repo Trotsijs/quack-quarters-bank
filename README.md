@@ -24,7 +24,7 @@ The project is a Laravel-based internet banking application with the following f
 🟣 Two-factor authentication:
 <p align="center"><img src="two-factor.gif" width="1200"></p>
 
-🟣 Create accounts and delete:
+🟣 Create and delete accounts:
 <p align="center"><img src="create_new_account.gif" width="1200"></p>
 
 🟣 Deposit and withdraw money:
