@@ -36,7 +36,7 @@
                             </div>
                             <label for="2fa_code" class="mt-2 block text-gray-700 font-bold mb-2">2FA Code</label>
                             <x-input id="2fa_code" placeholder="2FA Code" class="block mt-1 w-60" type="text"
-                                     name="2fa_code" :value="old('2fa_code')" required autofocus/>
+                                     name="2fa_code" :value="old('2fa_code')"/>
                             @if ($errors->any())
                                 <div class="text-red-500 text-sm mt-1">
                                     {{ $errors->first()}}

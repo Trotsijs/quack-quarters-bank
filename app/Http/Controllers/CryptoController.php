@@ -10,6 +10,8 @@ use App\Services\CryptoApiService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use PragmaRX\Google2FA\Google2FA;
 
 class CryptoController extends Controller
 {
@@ -54,9 +56,28 @@ class CryptoController extends Controller
 
     public function buyCrypto(Request $request, $coinId, $coinSymbol, $coinPrice): RedirectResponse
     {
+
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required|numeric|min:0.00000001',
+            '2fa_code' => 'required|digits:6',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $user = Auth::user();
         $amount = $request->input('amount');
         $otpSecret = $request->input('2fa_code');
+
+        $google2fa = new Google2FA();
+        $secret = $user->otp_secret;
+
+        $valid = $google2fa->verifyKey($secret, $otpSecret);
+
+        if (!$valid) {
+            return redirect()->back()->withErrors(['error' => 'Invalid 2FA Code'])->withInput();
+        }
 
         $fromAccount = BankAccount::where('owner_id', $user->id)
             ->where('account_type', 'savings')
@@ -99,9 +120,28 @@ class CryptoController extends Controller
 
     public function sellCrypto(Request $request, $coinId, $coinSymbol, $coinPrice): RedirectResponse
     {
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required|numeric|min:0.00000001',
+            '2fa_code' => 'required|digits:6',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $user = Auth::user();
         $amount = $request->input('amount');
         $otpSecret = $request->input('2fa_code');
+
+
+        $google2fa = new Google2FA();
+        $secret = $user->otp_secret;
+
+        $valid = $google2fa->verifyKey($secret, $otpSecret);
+
+        if (!$valid) {
+            return redirect()->back()->withErrors(['error' => 'Invalid 2FA Code'])->withInput();
+        }
 
         $fromAccount = BankAccount::where('owner_id', $user->id)
             ->where('account_type', 'savings')
