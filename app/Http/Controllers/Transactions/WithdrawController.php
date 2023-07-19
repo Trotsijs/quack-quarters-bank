@@ -42,12 +42,14 @@ class WithdrawController extends Controller
         $valid = $google2fa->verifyKey($secret, $otpSecret);
 
         if (!$valid) {
-            return redirect()->back()->withErrors(['error' => 'Invalid 2FA Code'])->withInput();
+            Session::flash('error', 'Invalid 2FA Code');
+
+            return redirect()->back()->withInput();
         }
 
         $account = BankAccount::where('owner_id', $user->id)->where('id', $accountId)->first();
 
-        $transaction = Transaction::create([
+        Transaction::create([
             'user_id' => $user->id,
             'from_account_id' => $account->account_number,
             'to_account_id' => '',
@@ -63,13 +65,18 @@ class WithdrawController extends Controller
                 $account->save();
 
                 Session::flash('success', 'Withdraw successful!');
+
                 return redirect()->route('transactions');
             } else {
+
                 Session::flash('error', 'Transaction failed! Insufficient funds!');
+
                 return redirect()->back()->withInput();
             }
         }
 
-        return redirect()->back()->with('error', 'Account not found');
+        Session::flash('error', 'Account not found');
+
+        return redirect()->back();
     }
 }

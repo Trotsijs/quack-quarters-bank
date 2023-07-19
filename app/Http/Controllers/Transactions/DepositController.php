@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -41,12 +42,13 @@ class DepositController extends Controller
         $valid = $google2fa->verifyKey($secret, $otpSecret);
 
         if (!$valid) {
-            return redirect()->back()->withErrors(['error' => 'Invalid 2FA Code'])->withInput();
+            Session::flash('error', 'Invalid 2FA Code');
+            return redirect()->back()->withInput();
         }
 
         $account = BankAccount::where('owner_id', $user->id)->where('id', $accountId)->first();
 
-        $transaction = Transaction::create([
+        Transaction::create([
             'user_id' => $user->id,
             'from_account_id' => $account->account_number,
             'to_account_id' => '',
@@ -60,9 +62,11 @@ class DepositController extends Controller
             $account->balance += $amount;
             $account->save();
 
-            return redirect()->route('transactions')->with('success', 'Deposit successful');
+            Session::flash('success', 'Deposit successful');
+            return redirect()->route('transactions');
         }
 
-        return redirect()->back()->with('error', 'Account not found');
+        Session::flash('error', 'Account not found');
+        return redirect()->back();
     }
 }

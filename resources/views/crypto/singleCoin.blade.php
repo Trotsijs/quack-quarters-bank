@@ -1,4 +1,14 @@
 <x-app-layout>
+    @if(Session::has('error'))
+        <x-error-notification>
+            {{ session('error') }}
+        </x-error-notification>
+    @endif
+    @if(Session::has('success'))
+        <x-success-notification>
+            {{ session('success') }}
+        </x-success-notification>
+    @endif
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}

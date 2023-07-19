@@ -11,6 +11,7 @@ use App\Services\CryptoApiService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -77,7 +78,9 @@ class CryptoController extends Controller
         $valid = $google2fa->verifyKey($secret, $otpSecret);
 
         if (!$valid) {
-            return redirect()->back()->withErrors(['error' => 'Invalid 2FA Code'])->withInput();
+            Session::flash('error', 'Invalid 2FA Code');
+
+            return redirect()->back()->withInput();
         }
 
         $fromAccount = BankAccount::where('owner_id', $user->id)
@@ -116,7 +119,14 @@ class CryptoController extends Controller
         $fromAccount->balance -= $amount * $coinPrice;
         $fromAccount->save();
 
-        return redirect()->route('cryptoTransactions')->with('Transaction successful');
+        Session::flash(
+            'success',
+            'You have successfully bought ' .
+            $amount . ' ' .
+            $coinSymbol . ' for $' .
+            number_format($amount * $coinPrice, 2));
+
+        return redirect()->route('cryptoTransactions');
     }
 
     public function sellCrypto(Request $request, $coinId, $coinSymbol, $coinPrice): RedirectResponse
@@ -141,7 +151,9 @@ class CryptoController extends Controller
         $valid = $google2fa->verifyKey($secret, $otpSecret);
 
         if (!$valid) {
-            return redirect()->back()->withErrors(['error' => 'Invalid 2FA Code'])->withInput();
+            Session::flash('error', 'Invalid 2FA Code');
+
+            return redirect()->back()->withInput();
         }
 
         $fromAccount = BankAccount::where('owner_id', $user->id)
@@ -154,13 +166,16 @@ class CryptoController extends Controller
 
         if ($existingPortfolio) {
             if ($existingPortfolio->amount < $amount) {
-                return redirect()->back()->with('error',
-                    'Insufficient amount of ' . $coinSymbol . ' in your portfolio.');
+                Session::flash('error', 'Insufficient amount of ' . $coinSymbol . ' in your portfolio.');
+
+                return redirect()->back()->withInput();
             }
             $existingPortfolio->amount -= $amount;
             $existingPortfolio->save();
         } else {
-            return redirect()->back()->with('error', 'You do not have ' . $coinSymbol . ' in your portfolio.');
+            Session::flash('error', 'You do not have ' . $coinSymbol . ' in your portfolio.');
+
+            return redirect()->back()->withInput();
         }
 
         CryptoTransaction::create([
@@ -177,9 +192,14 @@ class CryptoController extends Controller
         $fromAccount->balance += $amount * $coinPrice;
         $fromAccount->save();
 
-        return redirect()
-            ->route('cryptoTransactions')
-            ->with('Transaction successful');
+        Session::flash(
+            'success',
+            'You have successfully sold ' .
+            $amount . ' ' .
+            $coinSymbol . ' for $' .
+            number_format($amount * $coinPrice, 2));
+
+        return redirect()->route('cryptoTransactions');
     }
 
 }

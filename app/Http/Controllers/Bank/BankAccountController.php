@@ -64,7 +64,8 @@ class BankAccountController extends Controller
         $valid = $google2fa->verifyKey($secret, $otpSecret);
 
         if (!$valid) {
-            return redirect()->back()->withErrors(['error' => 'Invalid 2FA Code'])->withInput();
+            Session::flash('error', 'Invalid 2FA Code!');
+            return redirect()->back()->withInput();
         }
 
         BankAccount::create([
@@ -89,13 +90,15 @@ class BankAccountController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors(['error' => 'Invalid account number']);
+            Session::flash('error', 'Invalid account number');
+            return redirect()->back();
         }
 
         $account = BankAccount::where('account_number', $accountNumber)->first();
 
         if ($account->balance > 0) {
-            return redirect()->back()->withErrors(['error' => 'Cannot delete account with a balance greater than 0']);
+            Session::flash('error', 'Cannot delete account with a balance greater than 0');
+            return redirect()->back();
         }
 
         $account->delete();

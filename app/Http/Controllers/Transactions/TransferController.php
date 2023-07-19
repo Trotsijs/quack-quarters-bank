@@ -45,7 +45,9 @@ class TransferController extends Controller
         $valid = $google2fa->verifyKey($secret, $otpSecret);
 
         if (!$valid) {
-            return redirect()->back()->withErrors(['error' => 'Invalid 2FA Code'])->withInput();
+            Session::flash('error', 'Invalid 2FA Code');
+
+            return redirect()->back()->withInput();
         }
 
         $fromAccount = BankAccount::where('owner_id', $user->id)
@@ -56,6 +58,7 @@ class TransferController extends Controller
 
         if (!$fromAccount) {
             Session::flash('error', 'Invalid source account!');
+
             return redirect()->back()->withInput();
         }
 
@@ -86,12 +89,15 @@ class TransferController extends Controller
 
                 return redirect()->route('transactions');
             } else {
+
                 Session::flash('error', 'Transaction failed! Insufficient balance!');
+
                 return redirect()->back()->withInput();
             }
         }
 
         Session::flash('error', 'Invalid account details');
+
         return redirect()->back()->withInput();
     }
 }
