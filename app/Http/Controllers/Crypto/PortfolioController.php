@@ -33,6 +33,6 @@ class PortfolioController extends Controller
             }
         }
 
-        return view('portfolio', compact('portfolioData', 'totalPortfolioValue'));
+        return view('crypto.portfolio', compact('portfolioData', 'totalPortfolioValue'));
     }
 }

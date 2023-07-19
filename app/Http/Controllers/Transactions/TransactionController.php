@@ -13,6 +13,6 @@ class TransactionController extends Controller
         $user = Auth::user();
         $transactions = Transaction::where('user_id', $user->id)->get();
 
-        return view('transactions', compact('transactions'));
+        return view('transactions.transactions', compact('transactions'));
     }
 }

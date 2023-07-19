@@ -22,7 +22,7 @@ class CryptoController extends Controller
         $coins = $cryptoApiService->getReport();;
 
 
-        return view('crypto', [
+        return view('crypto.crypto', [
             'coins' => $coins,
         ]);
     }
@@ -46,7 +46,7 @@ class CryptoController extends Controller
             );
         }
 
-        return view('singleCoin', [
+        return view('crypto.singleCoin', [
             'coin' => $coin,
             'coinInfo' => $coinInfo,
             'coinPrice' => $coinInfo->price,

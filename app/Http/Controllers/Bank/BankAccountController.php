@@ -29,13 +29,13 @@ class BankAccountController extends Controller
             }
         }
 
-        return view('accounts', compact('savingsAccounts', 'checkingAccounts'));
+        return view('accounts.accounts', compact('savingsAccounts', 'checkingAccounts'));
     }
 
 
     public function showCreateForm(): View
     {
-        return view('createAccount');
+        return view('accounts.createAccount');
     }
 
     public function create(Request $request): RedirectResponse

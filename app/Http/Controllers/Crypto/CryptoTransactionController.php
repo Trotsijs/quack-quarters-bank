@@ -12,7 +12,7 @@ class CryptoTransactionController extends Controller
     {
         $user = Auth::user();
         $cryptoTransactions = CryptoTransaction::where('user_id', $user->id)->get();
-        return view('cryptoTransactions', compact('cryptoTransactions'));
+        return view('crypto.cryptoTransactions', compact('cryptoTransactions'));
     }
 
 }
