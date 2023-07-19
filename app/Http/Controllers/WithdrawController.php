@@ -14,7 +14,7 @@ class WithdrawController extends Controller
 {
     public function index()
     {
-        return view('withdraw');
+        return view('transactions.withdraw');
     }
 
     public function withdraw(Request $request): RedirectResponse

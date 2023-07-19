@@ -14,7 +14,7 @@ class TransferController extends Controller
 {
     public function index()
     {
-        return view('transfer');
+        return view('transactions.transfer');
     }
 
     public function transfer(Request $request): RedirectResponse

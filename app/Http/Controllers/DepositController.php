@@ -14,7 +14,7 @@ class DepositController extends Controller
 {
     public function index()
     {
-        return view('deposit');
+        return view('transactions.deposit');
     }
 
     public function deposit(Request $request): RedirectResponse
