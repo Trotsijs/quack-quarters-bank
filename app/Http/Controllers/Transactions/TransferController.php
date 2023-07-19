@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Transactions;
 
+use App\Http\Controllers\Controller;
 use App\Models\BankAccount;
 use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
@@ -10,16 +11,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use PragmaRX\Google2FA\Google2FA;
 
-class WithdrawController extends Controller
+class TransferController extends Controller
 {
     public function index()
     {
-        return view('transactions.withdraw');
+        return view('transactions.transfer');
     }
 
-    public function withdraw(Request $request): RedirectResponse
+    public function transfer(Request $request): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
+            'from_account' => 'required',
+            'to_account' => 'required',
             'amount' => 'required|numeric|min:1',
             '2fa_code' => 'required',
         ]);
@@ -29,7 +32,8 @@ class WithdrawController extends Controller
         }
 
         $user = Auth::user();
-        $accountId = $request->input('account');
+        $fromAccountId = $request->input('from_account');
+        $toAccountNumber = $request->input('to_account');
         $amount = $request->input('amount');
         $otpSecret = $request->input('2fa_code');
         $description = $request->input('description');
@@ -43,24 +47,31 @@ class WithdrawController extends Controller
             return redirect()->back()->withErrors(['error' => 'Invalid 2FA Code'])->withInput();
         }
 
-        $account = BankAccount::where('owner_id', $user->id)->where('id', $accountId)->first();
+        $fromAccount = BankAccount::where('owner_id', $user->id)
+            ->where('id', $fromAccountId)
+            ->first();
+
+        $toAccount = BankAccount::where('account_number', $toAccountNumber)->first();
+        $account = BankAccount::where('owner_id', $user->id)->where('id', $fromAccountId)->first();
 
         $transaction = Transaction::create([
             'user_id' => $user->id,
             'from_account_id' => $account->account_number,
-            'to_account_id' => '',
-            'type' => 'Withdrawal',
+            'to_account_id' => $toAccount->account_number,
+            'type' => 'Transfer',
             'amount' => $amount,
             'description' => $description,
 
         ]);
 
-        if ($account) {
-            if ($account->balance >= $amount) {
-                $account->balance -= $amount;
-                $account->save();
+        if ($fromAccount && $toAccount) {
+            if ($fromAccount->balance >= $amount) {
+                $fromAccount->balance -= $amount;
+                $toAccount->balance += $amount;
+                $fromAccount->save();
+                $toAccount->save();
 
-                return redirect()->route('transactions')->with('success', 'Withdraw successful');
+                return redirect()->route('transactions')->with('success', 'Transfer successful');
             } else {
                 return redirect()->back()->withErrors
                 (
@@ -71,6 +82,6 @@ class WithdrawController extends Controller
             }
         }
 
-        return redirect()->back()->with('error', 'Account not found');
+        return redirect()->back()->withErrors(['error' => 'Invalid account details'])->withInput();
     }
 }

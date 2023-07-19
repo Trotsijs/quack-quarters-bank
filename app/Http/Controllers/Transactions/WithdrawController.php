@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Transactions;
 
+use App\Http\Controllers\Controller;
 use App\Models\BankAccount;
 use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
@@ -10,14 +11,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use PragmaRX\Google2FA\Google2FA;
 
-class DepositController extends Controller
+class WithdrawController extends Controller
 {
     public function index()
     {
-        return view('transactions.deposit');
+        return view('transactions.withdraw');
     }
 
-    public function deposit(Request $request): RedirectResponse
+    public function withdraw(Request $request): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'amount' => 'required|numeric|min:1',
@@ -49,17 +50,26 @@ class DepositController extends Controller
             'user_id' => $user->id,
             'from_account_id' => $account->account_number,
             'to_account_id' => '',
-            'type' => 'Deposit',
+            'type' => 'Withdrawal',
             'amount' => $amount,
             'description' => $description,
 
         ]);
 
         if ($account) {
-            $account->balance += $amount;
-            $account->save();
+            if ($account->balance >= $amount) {
+                $account->balance -= $amount;
+                $account->save();
 
-            return redirect()->route('transactions')->with('success', 'Deposit successful');
+                return redirect()->route('transactions')->with('success', 'Withdraw successful');
+            } else {
+                return redirect()->back()->withErrors
+                (
+                    [
+                        'error' => 'Transaction failed! Insufficient balance!',
+                    ]
+                )->withInput();
+            }
         }
 
         return redirect()->back()->with('error', 'Account not found');

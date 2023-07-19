@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Bank;
 
+use App\Http\Controllers\Controller;
 use App\Models\BankAccount;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;

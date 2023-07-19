@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Crypto;
 
+use App\Http\Controllers\Controller;
 use App\Models\Portfolio;
 use App\Services\CryptoApiService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PortfolioController extends Controller

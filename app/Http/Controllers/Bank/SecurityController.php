@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Bank;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use PragmaRX\Google2FAQRCode\Google2FA;
 
 class SecurityController extends Controller
 {

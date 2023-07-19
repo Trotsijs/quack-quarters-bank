@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Crypto;
 
-use App\Models\BankAccount;
+use App\Http\Controllers\Controller;
 use App\Models\CryptoTransaction;
-use App\Models\Portfolio;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CryptoTransactionController extends Controller

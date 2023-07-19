@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\BankAccountController;
-use App\Http\Controllers\CryptoController;
-use App\Http\Controllers\CryptoTransactionController;
-use App\Http\Controllers\DepositController;
-use App\Http\Controllers\PortfolioController;
-use App\Http\Controllers\SecurityController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\TransferController;
-use App\Http\Controllers\WithdrawController;
+use App\Http\Controllers\Bank\BankAccountController;
+use App\Http\Controllers\Bank\SecurityController;
+use App\Http\Controllers\Crypto\CryptoController;
+use App\Http\Controllers\Crypto\CryptoTransactionController;
+use App\Http\Controllers\Crypto\PortfolioController;
+use App\Http\Controllers\Transactions\DepositController;
+use App\Http\Controllers\Transactions\TransactionController;
+use App\Http\Controllers\Transactions\TransferController;
+use App\Http\Controllers\Transactions\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
 /*

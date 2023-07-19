@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Crypto;
 
+use App\Http\Controllers\Controller;
 use App\Models\BankAccount;
 use App\Models\CryptoCoin;
 use App\Models\CryptoTransaction;
