@@ -1,4 +1,14 @@
 <x-app-layout>
+    @if(Session::has('error'))
+        <x-error-notification>
+            {{ session('error') }}
+        </x-error-notification>
+    @endif
+    @if(Session::has('success'))
+        <x-success-notification>
+            {{ session('success') }}
+        </x-success-notification>
+    @endif
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
@@ -14,7 +24,8 @@
                         <label for="from_account" class="block text-gray-700 font-bold mb-2">From Account:</label>
                         <div class="flex gap-x-2 items-center">
 
-                            <select id="from_account" name="from_account" class="text-gray-700 border border-gray-300 rounded py-2 px-4 text-sm w-96">
+                            <select id="from_account" name="from_account"
+                                    class="text-gray-700 border border-gray-300 rounded py-2 px-4 text-sm w-96">
                                 @foreach (Auth::user()->accounts as $account)
                                     <option
                                         value="{{ $account->id }}">{{ $account->account_number }} {{ number_format($account->balance, 2) }} {{ $account->currency }}</option>
@@ -24,8 +35,8 @@
                         <label for="to_account" class="mt-2 block text-gray-700 font-bold mb-2">To Account:</label>
                         <div class="">
                             <x-input class="block mt-1 w-96" type="text" id="to_account"
-                                   name="to_account" placeholder="Enter Account Number"
-                                   value="{{ old('to_account') }}" />
+                                     name="to_account" placeholder="Enter Account Number"
+                                     value="{{ old('to_account') }}"/>
                         </div>
                         @error('to_account')
                         <div class="text-red-500 text-sm rounded">{{ $message }}</div>
@@ -34,7 +45,7 @@
                         <label for="amount" class="mt-2 block text-gray-700 font-bold mb-2">Amount:</label>
                         <div class="">
                             <x-input class="block mt-1 w-96" type="text" id="amount"
-                                   name="amount" placeholder="Enter Amount" value="{{ old('amount') }}" />
+                                     name="amount" placeholder="Enter Amount" value="{{ old('amount') }}"/>
                         </div>
                         @error('amount')
                         <div class="text-red-500 text-sm">{{ $message }}</div>
@@ -43,7 +54,8 @@
                         <label for="description" class="mt-2 block text-gray-700 font-bold mb-2">Description:</label>
                         <div class="">
                             <x-input class="block mt-1 w-96" type="text" id="description"
-                                     name="description" placeholder="Enter Description" value="{{ old('description') }}" />
+                                     name="description" placeholder="Enter Description"
+                                     value="{{ old('description') }}"/>
                         </div>
 
                         <label for="2fa_code" class="mt-2 block text-gray-700 font-bold mb-2">2FA Code</label>

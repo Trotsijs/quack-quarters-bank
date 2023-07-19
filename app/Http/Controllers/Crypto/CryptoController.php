@@ -154,7 +154,8 @@ class CryptoController extends Controller
 
         if ($existingPortfolio) {
             if ($existingPortfolio->amount < $amount) {
-                return redirect()->back()->with('error', 'Insufficient amount of ' . $coinSymbol . ' in your portfolio.');
+                return redirect()->back()->with('error',
+                    'Insufficient amount of ' . $coinSymbol . ' in your portfolio.');
             }
             $existingPortfolio->amount -= $amount;
             $existingPortfolio->save();
@@ -180,6 +181,5 @@ class CryptoController extends Controller
             ->route('cryptoTransactions')
             ->with('Transaction successful');
     }
-
 
 }

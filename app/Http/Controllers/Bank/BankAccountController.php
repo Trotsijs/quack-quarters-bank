@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use PragmaRX\Google2FA\Google2FA;
+use Illuminate\Support\Facades\Session;
 
 
 class BankAccountController extends Controller
@@ -74,7 +75,9 @@ class BankAccountController extends Controller
             'currency' => $request->input('currency'),
         ]);
 
-        return redirect()->route('accounts')->with('success', 'Account created successfully!');
+        Session::flash('success', 'Account created successfully!');
+
+        return redirect()->route('accounts');
     }
 
     public function delete($accountNumber): RedirectResponse
@@ -97,7 +100,9 @@ class BankAccountController extends Controller
 
         $account->delete();
 
-        return redirect()->route('accounts')->with('success', 'Account deleted successfully!');
+        Session::flash('success', 'Account deleted successfully!');
+
+        return redirect()->route('accounts');
     }
 
 

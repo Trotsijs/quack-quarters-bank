@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 use PragmaRX\Google2FA\Google2FA;
 
 class WithdrawController extends Controller
@@ -61,14 +62,11 @@ class WithdrawController extends Controller
                 $account->balance -= $amount;
                 $account->save();
 
-                return redirect()->route('transactions')->with('success', 'Withdraw successful');
+                Session::flash('success', 'Withdraw successful!');
+                return redirect()->route('transactions');
             } else {
-                return redirect()->back()->withErrors
-                (
-                    [
-                        'error' => 'Transaction failed! Insufficient balance!',
-                    ]
-                )->withInput();
+                Session::flash('error', 'Transaction failed! Insufficient funds!');
+                return redirect()->back()->withInput();
             }
         }
 

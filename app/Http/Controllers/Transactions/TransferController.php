@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use PragmaRX\Google2FA\Google2FA;
 
@@ -52,11 +53,21 @@ class TransferController extends Controller
             ->first();
 
         $toAccount = BankAccount::where('account_number', $toAccountNumber)->first();
-        $account = BankAccount::where('owner_id', $user->id)->where('id', $fromAccountId)->first();
 
-        $transaction = Transaction::create([
+        if (!$fromAccount) {
+            Session::flash('error', 'Invalid source account!');
+            return redirect()->back()->withInput();
+        }
+
+        if (!$toAccount) {
+            Session::flash('error', 'You have entered an invalid account number or this account does not exist!');
+
+            return redirect()->back()->withInput();
+        }
+
+        Transaction::create([
             'user_id' => $user->id,
-            'from_account_id' => $account->account_number,
+            'from_account_id' => $fromAccount->account_number,
             'to_account_id' => $toAccount->account_number,
             'type' => 'Transfer',
             'amount' => $amount,
@@ -71,17 +82,16 @@ class TransferController extends Controller
                 $fromAccount->save();
                 $toAccount->save();
 
-                return redirect()->route('transactions')->with('success', 'Transfer successful');
+                Session::flash('success', 'Transaction successful!');
+
+                return redirect()->route('transactions');
             } else {
-                return redirect()->back()->withErrors
-                (
-                    [
-                        'error' => 'Transaction failed! Insufficient balance!',
-                    ]
-                )->withInput();
+                Session::flash('error', 'Transaction failed! Insufficient balance!');
+                return redirect()->back()->withInput();
             }
         }
 
-        return redirect()->back()->withErrors(['error' => 'Invalid account details'])->withInput();
+        Session::flash('error', 'Invalid account details');
+        return redirect()->back()->withInput();
     }
 }
