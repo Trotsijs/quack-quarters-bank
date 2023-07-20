@@ -28,23 +28,23 @@
                     <div class="flex-1 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
                             <div class="flex items-center justify-between">
-                                <div class="flex gap-x-2">
+                                <div class="flex gap-x-2 items-center">
                                     <img
                                         src="https://s2.coinmarketcap.com/static/img/coins/64x64/{{ $data->coin_id }}.png"
-                                        height="25" width="25" alt="">
+                                        height="50" width="50" alt="">
                                     <p class="font-bold text-lg">{{ $data->coin_symbol }}</p>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <p class="p-2 font-bold text-right">
+                                    <p class="p-2 font-bold text-lg">
                                         {{ number_format($data->amount, 10) }}
                                     </p>
-                                    <p class="font-bold">
-                                        ${{ number_format($data->coin_value, 2) }}
-                                    </p>
                                 </div>
-                                <div>
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="font-bold text-lg">
+                                            ${{ number_format($data->coin_value, 2) }}
+                                        </p>
+                                    </div>
                                     <a href="coin/{{$data->coin_id}}">
-                                        <button class="bg-purple-900 hover:bg-purple-500 px-2 text-white rounded">
+                                        <button class="bg-purple-900 hover:bg-purple-500 py-2 px-4 text-white rounded ml-4">
                                             Trade
                                         </button>
                                     </a>
