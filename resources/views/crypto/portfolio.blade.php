@@ -17,40 +17,43 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
             <div class="bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg mb-4">
                 <div class="text-center text-3xl font-bold mb-1 mt-4">My Portfolio</div>
-                <div class="text-center text-xl font-bold mb-4 text-green-500">${{number_format($totalPortfolioValue, 2)}}</div>
+                <div class="text-center text-xl font-bold mb-4 text-green-500">
+                    ${{number_format($totalPortfolioValue, 2)}}</div>
             </div>
-            <div class="bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-gray-50 border-b border-gray-200">
-
-                    <table class="table w-full">
-                        <thead class="border-b-4">
-                        <tr>
-                            <th class="p-2 text-justify">Coin</th>
-                            <th class="p-2 text-right">Amount owned</th>
-                            <th class="p-2 text-right">Value</th>
-                            <th class="p-2 text-right">Trade</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($portfolioData as $data)
-                            <tr class="border-b hover:bg-gray-200">
-                                <td class="p-2 text-left font-bold flex gap-x-2"><img
+            @foreach($portfolioData as $data)
+                <div class="flex flex-row py-4">
+                    <div class="flex-1 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 bg-white border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-x-2">
+                                    <img
                                         src="https://s2.coinmarketcap.com/static/img/coins/64x64/{{ $data->coin_id }}.png"
-                                        height="25" width="25" alt=""> {{ $data->coin_symbol }}</td>
-                                <td class="p-2 text-right font-bold">{{ number_format($data->amount, 10) }}</td>
-                                <td class="p-2 text-right font-bold">${{ number_format($data->coin_value, 2) }}</td>
-                                <td class="w-5 p-2 text-right font-bold"><a href="coin/{{$data->coin_id}}"><button class="bg-purple-900 hover:bg-purple-500 px-2 text-white rounded">Trade</button></a></td>
-                            </tr>
-
-                        @endforeach
-
-                        </tbody>
-                    </table>
-
+                                        height="25" width="25" alt="">
+                                    <p class="font-bold text-lg">{{ $data->coin_symbol }}</p>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p class="p-2 font-bold text-right">
+                                        {{ number_format($data->amount, 10) }}
+                                    </p>
+                                    <p class="font-bold">
+                                        ${{ number_format($data->coin_value, 2) }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <a href="coin/{{$data->coin_id}}">
+                                        <button class="bg-purple-900 hover:bg-purple-500 px-2 text-white rounded">
+                                            Trade
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </x-app-layout>
