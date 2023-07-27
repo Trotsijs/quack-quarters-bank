@@ -32,8 +32,10 @@
                                 <td class="p-2 text-left">{{ $transaction->to_account_id }}</td>
                                 <td class="p-2 text-right">{{ $transaction->type }}</td>
                                 <td class="p-2 text-right text-gray-600">{{ $transaction->description }}</td>
-                                <td class="p-2 text-right {{ $transaction->type === 'Deposit' ? 'text-green-500' : 'text-red-500' }}">
+                                <td class="p-2 text-right {{ $transaction->type === 'Deposit' ? 'text-green-500' : ($transaction->type === 'Transfer' && $transaction->to_user_id === Auth::user()->id ? 'text-green-500' : 'text-red-500') }}">
                                     @if ($transaction->type === 'Deposit')
+                                        +{{ $transaction->amount}}
+                                    @elseif ($transaction->type === 'Transfer' && $transaction->to_user_id === Auth::user()->id)
                                         +{{ $transaction->amount }}
                                     @else
                                         -{{ $transaction->amount }}

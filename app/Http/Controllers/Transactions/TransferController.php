@@ -62,6 +62,8 @@ class TransferController extends Controller
             ->first();
 
         $toAccount = BankAccount::where('account_number', $toAccountNumber)->first();
+        $toAccountId = $toAccount->owner_id;
+
 
         if (!$fromAccount) {
             Session::flash('error', 'Invalid source account!');
@@ -102,6 +104,7 @@ class TransferController extends Controller
             'user_id' => $user->id,
             'from_account_id' => $fromAccount->account_number,
             'to_account_id' => $toAccount->account_number,
+            'to_user_id' => $toAccountId,
             'type' => 'Transfer',
             'amount' => $amount,
             'description' => $description,

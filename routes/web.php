@@ -101,8 +101,5 @@ Route::post('/coin/{id}/{symbol}/{price}/sell', [CryptoController::class, 'sellC
 Route::get('/portfolio', [PortfolioController::class, 'index'])
     ->middleware(['auth'])->name('portfolio');
 
-Route::get('/test', [\App\Services\CurrencyApiService::class, 'getData'])
-    ->middleware(['auth'])->name('test');
-
 
 require __DIR__ . '/auth.php';
