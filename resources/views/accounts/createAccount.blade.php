@@ -19,7 +19,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 flex-col">
-                    <div class="text-center text-3xl font-bold mb-4 text-center">Create a new Account</div>
+                    <div class="text-3xl font-bold mb-4 text-center">Create a new Account</div>
                     <div class="flex justify-center">
                         <form action="{{ route('create') }}" method="POST" x-data="{ accountType: 'checking' }">
                             @csrf
@@ -40,8 +40,10 @@
                                         class="text-gray-700 border border-gray-300 rounded py-2 px-4 w-60 mb-2"
                                         x-bind:disabled="accountType === 'savings' && currency !== 'USD'"
                                         x-model="currency">
-                                    <option value="USD">USD</option>
                                     <option value="EUR">EUR</option>
+                                    @foreach ($currencies as $currency)
+                                    <option value="{{ $currency->ID }}">{{ $currency->ID }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <label for="2fa_code" class="mt-2 block text-gray-700 font-bold mb-2">2FA Code</label>

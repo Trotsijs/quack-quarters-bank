@@ -55,9 +55,7 @@
                                 <td class="p-2 text-right font-bold">${{ $coin->quote->USD->market_cap }}</td>
                                 <td class="w-5 p-2 text-right font-bold">{{ number_format($coin->total_supply, 0) }}</td>
                             </tr>
-
                         @endforeach
-
                         </tbody>
                     </table>
                     <div class="text-center mt-6">

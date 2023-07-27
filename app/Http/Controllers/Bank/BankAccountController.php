@@ -11,10 +11,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use PragmaRX\Google2FA\Google2FA;
 use Illuminate\Support\Facades\Session;
+use App\Services\CurrencyApiService;
 
 
 class BankAccountController extends Controller
 {
+    private CurrencyApiService $client;
+
+    public function __construct()
+    {
+        $this->client = new CurrencyApiService();
+    }
     public function index(): View
     {
         $user = Auth::user();
@@ -36,7 +43,8 @@ class BankAccountController extends Controller
 
     public function showCreateForm(): View
     {
-        return view('accounts.createAccount');
+        $currencies = $this->client->getData();
+        return view('accounts.createAccount', compact('currencies'));
     }
 
     public function create(Request $request): RedirectResponse
