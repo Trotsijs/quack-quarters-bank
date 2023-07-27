@@ -26,9 +26,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth'])->name('dashboard');
 
 Route::get('/accounts', [BankAccountController::class, 'index'])
     ->middleware(['auth'])->name('accounts');
@@ -100,6 +100,5 @@ Route::post('/coin/{id}/{symbol}/{price}/sell', [CryptoController::class, 'sellC
 
 Route::get('/portfolio', [PortfolioController::class, 'index'])
     ->middleware(['auth'])->name('portfolio');
-
 
 require __DIR__ . '/auth.php';
