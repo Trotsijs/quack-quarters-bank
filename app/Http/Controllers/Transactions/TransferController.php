@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Transactions;
 use App\Http\Controllers\Controller;
 use App\Models\BankAccount;
 use App\Models\Transaction;
+use App\Services\CurrencyApiService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,12 @@ use PragmaRX\Google2FA\Google2FA;
 
 class TransferController extends Controller
 {
+    private CurrencyApiService $currencyApiService;
+
+    public function __construct()
+    {
+        $this->currencyApiService = new CurrencyApiService();
+    }
     public function index()
     {
         return view('transactions.transfer');
@@ -68,6 +75,29 @@ class TransferController extends Controller
             return redirect()->back()->withInput();
         }
 
+        $fromCurrency = $this->currencyApiService->getAccountCurrency($fromAccount);
+        $toCurrency = $this->currencyApiService->getAccountCurrency($toAccount);
+
+        $fromToEurRate = $this->currencyApiService->fetchConversionRate($fromCurrency, 'EUR');
+        $eurToToRate = $this->currencyApiService->fetchConversionRate('EUR', $toCurrency);
+
+        if ($fromCurrency == $toCurrency) {
+            $fromToEurRate = 1;
+            $eurToToRate = 1;
+        }
+
+        if ($toCurrency == 'EUR') {
+            $eurToToRate = 1;
+        }
+
+        if ($fromCurrency !== 'EUR') {
+            $amountInEUR = $amount / $fromToEurRate;
+        } else {
+            $amountInEUR = $amount;
+        }
+
+        $convertedAmount = $amountInEUR * $eurToToRate;
+
         Transaction::create([
             'user_id' => $user->id,
             'from_account_id' => $fromAccount->account_number,
@@ -81,7 +111,7 @@ class TransferController extends Controller
         if ($fromAccount && $toAccount) {
             if ($fromAccount->balance >= $amount) {
                 $fromAccount->balance -= $amount;
-                $toAccount->balance += $amount;
+                $toAccount->balance += $convertedAmount;
                 $fromAccount->save();
                 $toAccount->save();
 

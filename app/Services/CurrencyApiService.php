@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\BankAccount;
 use GuzzleHttp\Client;
 
 class CurrencyApiService
@@ -19,5 +20,25 @@ class CurrencyApiService
 
         return simplexml_load_string($response->getBody()->getContents())->Currencies->Currency;
 
+    }
+
+    public function getAccountCurrency(BankAccount $account) {
+        return $account->currency;
+    }
+
+    public function fetchConversionRate($fromCurrency, $toCurrency) {
+        $xmlData = $this->getData();
+        $rate = 0;
+        foreach ($xmlData as $currency) {
+            if ($currency->ID == $fromCurrency) {
+                $rate = $currency->Rate;
+            }
+
+            if ($currency->ID == $toCurrency) {
+                $rate = $currency->Rate;
+
+            }
+        }
+        return $rate;
     }
 }
