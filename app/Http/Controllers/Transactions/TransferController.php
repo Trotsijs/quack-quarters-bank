@@ -115,7 +115,7 @@ class TransferController extends Controller
                 $fromAccount->save();
                 $toAccount->save();
 
-                Session::flash('success', 'Transaction successful!');
+                Session::flash('success', 'Successfully transferred ' . number_format($convertedAmount, 2) . ' ' . $toCurrency);
 
                 return redirect()->route('transactions');
             } else {

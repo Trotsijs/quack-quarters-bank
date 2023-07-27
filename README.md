@@ -80,3 +80,8 @@ npm run dev
 ``` 
 
 11. Go to http://127.0.0.1:8000 in your browser
+
+### ⬇️ Resources
+
+- Crypto Data - [CoinMakerCap API](https://coinmarketcap.com/api/)
+- Currency Conversion Rates - [Latvijas Banka](https://www.bank.lv/vk/ecb.xml)
