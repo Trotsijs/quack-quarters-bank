@@ -61,9 +61,9 @@ npm install
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=root
-DB_PASSWORD=
+DB_DATABASE=[DB name]
+DB_USERNAME=[DB username]
+DB_PASSWORD=[DB password]
 ```
 7. Run this command to migrate the database
 ```
