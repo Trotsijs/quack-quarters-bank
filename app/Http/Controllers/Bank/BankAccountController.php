@@ -76,6 +76,11 @@ class BankAccountController extends Controller
             return redirect()->back()->withInput();
         }
 
+        if ($accountType === 'savings' && $user->savingsAccounts) {
+            Session::flash('error', 'User can have only one savings account!');
+            return redirect()->back()->withInput();
+        }
+
         BankAccount::create([
             'owner_id' => $user->id,
             'account_type' => $request->input('account_type'),

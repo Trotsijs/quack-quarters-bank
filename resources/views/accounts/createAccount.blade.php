@@ -38,17 +38,19 @@
                                 <select id="currency" name="currency"
                                         :class="{ 'bg-gray-100': accountType === 'savings' }"
                                         class="text-gray-700 border border-gray-300 rounded py-2 px-4 w-60 mb-2"
-                                        x-bind:disabled="accountType === 'savings' && currency !== 'USD'"
                                         x-model="currency">
                                     <template x-if="accountType === 'savings'">
-                                        <option value="USD" selected>USD</option>
+                                        <option value="USD">USD</option>
                                     </template>
                                     <template x-if="accountType === 'checking'">
                                         <option value="EUR" selected>EUR</option>
                                     </template>
                                     @foreach ($currencies as $currency)
+                                        <template x-if="accountType === 'checking'">
                                         <option value="{{ $currency->ID }}">{{ $currency->ID }}</option>
+                                        </template>
                                     @endforeach
+
                                 </select>
                             </div>
                             <label for="2fa_code" class="mt-2 block text-gray-700 font-bold mb-2">2FA Code</label>

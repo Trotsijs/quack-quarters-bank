@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\BankAccount;
 
 
 class User extends Authenticatable
@@ -34,6 +36,12 @@ class User extends Authenticatable
     public function accounts(): HasMany
     {
         return $this->hasMany(BankAccount::class, 'owner_id');
+    }
+
+    public function savingsAccounts(): HasOne
+    {
+        return $this->hasOne(BankAccount::class, 'owner_id')
+            ->where('account_type', 'savings');
     }
 
 }
