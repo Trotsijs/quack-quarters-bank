@@ -22,7 +22,7 @@
     <img src="/images/error404.png" alt="" class="mx-auto" width="200" height="200">
     <div class="mx-auto">
         <x-button class="mt-4">
-            <a href="{{ route('dashboard') }}">Go Back</a>
+            <a href="{{ route('accounts') }}">Home</a>
         </x-button>
     </div>
 </div>

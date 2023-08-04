@@ -11,7 +11,7 @@ class CryptoTransactionController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $cryptoTransactions = CryptoTransaction::where('user_id', $user->id)->get();
+        $cryptoTransactions = CryptoTransaction::where('user_id', $user->id)->latest()->get();
         return view('crypto.cryptoTransactions', compact('cryptoTransactions'));
     }
 
